@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://bloodlink-camu.onrender.com/api",
+  baseURL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? "http://localhost:5000/api"
+    : "https://bloodlink-camu.onrender.com/api",
   headers: {
     'Content-Type': 'application/json'
   }

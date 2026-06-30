@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import api from '../api/axios';
 import Loader from '../components/Loader';
+import { Plus, Phone, MapPin, Hospital, Check, X, FileText, Droplet, Clock } from '../components/Icons';
 
 const BloodRequests = () => {
   const { user } = useContext(AuthContext);
@@ -103,18 +104,19 @@ const BloodRequests = () => {
     <div style={{ position: 'relative', width: '100%' }}>
       {formLoading && <Loader fullScreen={true} />}
 
-      <h2 className="neon-text" style={{
-        fontSize: '2.5rem',
-        fontWeight: '800',
-        fontFamily: 'Poppins, sans-serif',
+      <h2 style={{
+        fontSize: '1.75rem',
+        fontWeight: '700',
+        fontFamily: 'var(--font-heading)',
+        color: 'var(--text-color)',
         marginBottom: '0.5rem',
         textAlign: 'left'
       }}>
         Blood Support Registry
       </h2>
       <p style={{
-        color: 'rgba(255, 255, 255, 0.6)',
-        fontSize: '1rem',
+        color: 'var(--text-secondary)',
+        fontSize: '0.95rem',
         marginBottom: '2rem',
         textAlign: 'left'
       }}>
@@ -136,12 +138,21 @@ const BloodRequests = () => {
       }}>
         {/* Left Side Form card */}
         <div className="glass" style={{
-          border: '1px solid rgba(230, 57, 70, 0.25)',
-          boxShadow: '0 0 30px rgba(230, 57, 70, 0.1)',
           position: 'sticky',
-          top: '100px'
+          top: '100px',
+          background: '#ffffff'
         }}>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', marginBottom: '1.5rem', fontFamily: 'Poppins, sans-serif' }}>
+          <h3 style={{ 
+            fontSize: '1.15rem', 
+            fontWeight: '700', 
+            color: 'var(--text-color)', 
+            marginBottom: '1.5rem', 
+            fontFamily: 'var(--font-heading)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <Plus size={20} color="var(--primary)" />
             Request Blood Support
           </h3>
 
@@ -218,15 +229,26 @@ const BloodRequests = () => {
               </select>
             </div>
 
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%', height: '42px' }}>
+              <Plus size={16} style={{ marginRight: '6px' }} />
               Submit Request Post
             </button>
           </form>
         </div>
 
         {/* Right Side Requests feed */}
-        <div style={{ display: 'grid', gap: '1.5rem', textAlign: 'left' }}>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem', fontFamily: 'Poppins, sans-serif' }}>
+        <div style={{ display: 'grid', gap: '1.25rem', textAlign: 'left' }}>
+          <h3 style={{ 
+            fontSize: '1.15rem', 
+            fontWeight: '700', 
+            color: 'var(--text-color)', 
+            marginBottom: '0.5rem', 
+            fontFamily: 'var(--font-heading)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <FileText size={20} color="var(--primary)" />
             Active Registry Requests
           </h3>
 
@@ -235,13 +257,14 @@ const BloodRequests = () => {
           ) : (
             <>
               {requests.length === 0 ? (
-                <div className="glass" style={{ padding: '3rem', textAlign: 'center', borderStyle: 'dashed' }}>
-                  <span style={{ fontSize: '2.5rem' }}>📋</span>
-                  <p style={{ color: 'rgba(255,255,255,0.4)', marginTop: '1rem' }}>No blood requests registered at the moment.</p>
+                <div className="glass" style={{ padding: '3rem', textAlign: 'center', borderStyle: 'dashed', background: '#ffffff' }}>
+                  <div style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                    <FileText size={36} />
+                  </div>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>No blood requests registered at the moment.</p>
                 </div>
               ) : (
                 requests.map((req) => {
-                  // Allow matching req.requestedBy as string id or populated user object
                   const requestedById = req.requestedBy?._id || req.requestedBy;
                   const currentUserId = user?.id || user?._id;
                   const isOwner = requestedById === currentUserId;
@@ -253,8 +276,9 @@ const BloodRequests = () => {
                       key={req._id}
                       className="glass"
                       style={{
-                        borderColor: isCritical && isPending ? 'rgba(230, 57, 70, 0.5)' : 'rgba(255, 255, 255, 0.1)',
-                        boxShadow: isCritical && isPending ? '0 0 15px rgba(230, 57, 70, 0.15)' : 'none',
+                        background: '#ffffff',
+                        borderColor: isCritical && isPending ? 'var(--primary)' : 'var(--border-color)',
+                        boxShadow: 'none',
                         position: 'relative'
                       }}
                     >
@@ -263,9 +287,9 @@ const BloodRequests = () => {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: '1rem'
+                        marginBottom: '1.25rem'
                       }}>
-                        <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                           <span className={`badge ${getUrgencyBadgeClass(req.urgency)}`}>
                             {req.urgency}
                           </span>
@@ -274,55 +298,81 @@ const BloodRequests = () => {
                           </span>
                         </div>
 
-                        <span style={{
-                          fontSize: '1.8rem',
-                          fontWeight: '800',
-                          color: '#e63946',
-                          fontFamily: 'Poppins, sans-serif'
-                        }}>
-                          {req.bloodGroup}
-                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <Droplet size={18} color="var(--primary)" />
+                          <span style={{
+                            fontSize: '1.5rem',
+                            fontWeight: '800',
+                            color: 'var(--primary)',
+                            fontFamily: 'var(--font-heading)',
+                            lineHeight: '1'
+                          }}>
+                            {req.bloodGroup}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Request Info */}
-                      <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', marginBottom: '1.2rem' }}>
-                        <p style={{ marginBottom: '0.4rem' }}>
-                          🏥 Hospital: <strong style={{ color: '#fff' }}>{req.hospital}</strong>
+                      <div style={{ 
+                        color: 'var(--text-secondary)', 
+                        fontSize: '0.9rem', 
+                        marginBottom: '1.25rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.6rem'
+                      }}>
+                        <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <Hospital size={16} color="var(--text-muted)" />
+                          <span>Hospital: <strong style={{ color: 'var(--text-color)' }}>{req.hospital}</strong></span>
                         </p>
-                        <p style={{ marginBottom: '0.4rem' }}>
-                          📍 Location: <strong style={{ color: '#fff' }}>{req.city}</strong>
+                        <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <MapPin size={16} color="var(--text-muted)" />
+                          <span>Location: <strong style={{ color: 'var(--text-color)' }}>{req.city}</strong></span>
                         </p>
-                        <p style={{ marginBottom: '0.4rem' }}>
-                          📞 Contact: <strong style={{ color: '#fff' }}>{req.contactNumber}</strong>
+                        <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <Phone size={16} color="var(--text-muted)" />
+                          <span>Contact: <strong style={{ color: 'var(--text-color)' }}>{req.contactNumber}</strong></span>
                         </p>
-                        <p style={{ marginBottom: '0.4rem', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.4)' }}>
-                          Requested by: {req.requestedBy?.name || 'Anonymous User'}
-                        </p>
-                        <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.4)' }}>
-                          Posted: {new Date(req.createdAt).toLocaleString()}
-                        </p>
+                        <div style={{ 
+                          borderTop: '1px solid #f1f5f9', 
+                          paddingTop: '0.6rem', 
+                          marginTop: '0.4rem', 
+                          fontSize: '0.8rem', 
+                          color: 'var(--text-muted)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '0.2rem'
+                        }}>
+                          <span>Requested by: {req.requestedBy?.name || 'Anonymous User'}</span>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <Clock size={12} />
+                            Posted: {new Date(req.createdAt).toLocaleString()}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Owner control buttons */}
                       {isOwner && isPending && (
                         <div style={{
                           display: 'flex',
-                          gap: '1rem',
-                          borderTop: '1px solid rgba(255,255,255,0.08)',
+                          gap: '0.75rem',
+                          borderTop: '1px solid var(--border-color)',
                           paddingTop: '1rem'
                         }}>
                           <button
                             onClick={() => handleUpdateStatus(req._id, 'fulfilled')}
                             className="btn btn-secondary"
                             style={{
-                              flex: 1,
+                              flex: 1.25,
                               padding: '6px 12px',
                               fontSize: '0.8rem',
-                              borderColor: 'rgba(40, 199, 111, 0.4)',
-                              color: '#28c76f'
+                              borderColor: '#bbf7d0',
+                              color: '#166534',
+                              background: '#f0fdf4'
                             }}
                           >
-                            ✓ Mark Fulfilled
+                            <Check size={14} style={{ marginRight: '4px' }} />
+                            Mark Fulfilled
                           </button>
                           <button
                             onClick={() => handleUpdateStatus(req._id, 'cancelled')}
@@ -333,7 +383,8 @@ const BloodRequests = () => {
                               fontSize: '0.8rem'
                             }}
                           >
-                            ✕ Cancel
+                            <X size={14} style={{ marginRight: '4px' }} />
+                            Cancel
                           </button>
                         </div>
                       )}

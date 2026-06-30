@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Loader from '../components/Loader';
+import { Droplet, UserPlus } from '../components/Icons';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -60,25 +61,36 @@ const Register = () => {
 
       <div className="glass" style={{
         width: '100%',
-        maxWidth: '520px',
+        maxWidth: '560px',
         textAlign: 'center',
-        border: '1px solid rgba(230, 57, 70, 0.25)',
-        boxShadow: '0 0 30px rgba(230, 57, 70, 0.15)',
-        marginTop: '1rem',
-        marginBottom: '1rem'
+        background: '#ffffff'
       }}>
-        <h2 className="neon-text" style={{
-          fontSize: '2rem',
+        {/* Simple Brand Droplet Header */}
+        <div style={{
+          display: 'inline-flex',
+          padding: '10px',
+          background: 'var(--primary-light, #fef2f2)',
+          border: '1px solid var(--primary-light-border, #fca5a5)',
+          borderRadius: '50%',
+          color: 'var(--primary)',
+          marginBottom: '1rem'
+        }}>
+          <Droplet size={24} />
+        </div>
+
+        <h2 style={{
+          fontSize: '1.5rem',
           fontWeight: '700',
-          fontFamily: 'Poppins, sans-serif',
-          marginBottom: '0.5rem'
+          fontFamily: 'var(--font-heading)',
+          color: 'var(--text-color)',
+          marginBottom: '0.25rem'
         }}>
           Join the Network
         </h2>
         <p style={{
-          color: 'rgba(255, 255, 255, 0.6)',
-          fontSize: '0.9rem',
-          marginBottom: '2rem'
+          color: 'var(--text-secondary)',
+          fontSize: '0.95rem',
+          marginBottom: '1.75rem'
         }}>
           Register as a donor or recipient to start saving lives
         </p>
@@ -92,7 +104,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '1rem',
             textAlign: 'left'
           }}>
@@ -102,7 +114,7 @@ const Register = () => {
                 type="text"
                 name="name"
                 className="form-control"
-                placeholder="e.g. John Doe"
+                placeholder="John Doe"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -115,7 +127,7 @@ const Register = () => {
                 type="email"
                 name="email"
                 className="form-control"
-                placeholder="e.g. john@example.com"
+                placeholder="john@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -128,7 +140,7 @@ const Register = () => {
                 type="password"
                 name="password"
                 className="form-control"
-                placeholder="At least 6 chars"
+                placeholder="At least 6 characters"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -183,40 +195,41 @@ const Register = () => {
           <div className="form-group" style={{ textAlign: 'left', marginTop: '0.5rem', marginBottom: '2rem' }}>
             <label className="form-label">Register As</label>
             <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'rgba(255,255,255,0.8)' }}>
+              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'var(--text-color)', fontSize: '0.925rem' }}>
                 <input
                   type="radio"
                   name="role"
                   value="donor"
                   checked={formData.role === 'donor'}
                   onChange={handleChange}
-                  style={{ marginRight: '8px', accentColor: '#e63946' }}
+                  style={{ marginRight: '8px', accentColor: 'var(--primary)', width: '16px', height: '16px' }}
                 />
                 Donor
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'rgba(255,255,255,0.8)' }}>
+              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'var(--text-color)', fontSize: '0.925rem' }}>
                 <input
                   type="radio"
                   name="role"
                   value="recipient"
                   checked={formData.role === 'recipient'}
                   onChange={handleChange}
-                  style={{ marginRight: '8px', accentColor: '#e63946' }}
+                  style={{ marginRight: '8px', accentColor: 'var(--primary)', width: '16px', height: '16px' }}
                 />
                 Recipient
               </label>
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginBottom: '1.5rem' }}>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginBottom: '1.5rem', height: '42px' }}>
+            <UserPlus size={16} style={{ marginRight: '6px' }} />
             Register Account
           </button>
         </form>
 
-        <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
           Already have an account?{' '}
           <Link to="/login" style={{
-            color: '#e63946',
+            color: 'var(--primary)',
             textDecoration: 'none',
             fontWeight: '600'
           }}>

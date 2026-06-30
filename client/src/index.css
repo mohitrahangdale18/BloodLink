@@ -1,17 +1,15 @@
-/* Custom variables */
+/* Clean, human-centric design tokens inspired by modern clinical & SaaS systems */
 :root {
-  --bg-color: #0a0a0f;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.4);
-  --primary: #e63946;
-  --primary-glow: rgba(230, 57, 70, 0.4);
-  --secondary: #ff6b6b;
-  --secondary-glow: rgba(255, 107, 107, 0.3);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(230, 57, 70, 0.15);
-  --glass-border-hover: rgba(230, 57, 70, 0.35);
-  --font-main: 'Inter', sans-serif;
+  --bg-color: #f8fafc; /* Slate 50 */
+  --card-bg: #ffffff;
+  --text-color: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+  --text-muted: #94a3b8; /* Slate 400 */
+  --primary: #dc2626; /* Red 600 - Standard medical crimson */
+  --primary-hover: #b91c1c; /* Red 700 */
+  --border-color: #e2e8f0; /* Slate 200 */
+  --border-focus: #dc2626;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Poppins', sans-serif;
 }
 
@@ -27,6 +25,8 @@ body {
   font-family: var(--font-main);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbar */
@@ -34,17 +34,16 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #07070b;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(230, 57, 70, 0.3);
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(230, 57, 70, 0.6);
+  background: #94a3b8;
 }
 
-/* Container limits */
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -53,36 +52,31 @@ body {
 
 main.content-area {
   flex: 1;
-  padding: 2.5rem 1.5rem;
+  padding: 3rem 1.5rem;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  position: relative;
-  z-index: 2;
 }
 
-/* Glassmorphism card */
+/* Card styles - clean, solid white with subtle borders */
 .glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px-1px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-hover:hover {
-  transform: translateY(-5px);
-  border-color: var(--glass-border-hover);
-  box-shadow: 0 12px 40px 0 rgba(230, 57, 70, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.04), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+  border-color: rgba(220, 38, 38, 0.2);
 }
 
-/* Glowing text */
 .neon-text {
   color: var(--primary);
-  text-shadow: 0 0 10px var(--primary-glow), 0 0 20px rgba(230, 57, 70, 0.2);
+  text-shadow: none;
   font-family: var(--font-heading);
 }
 
@@ -93,143 +87,129 @@ main.content-area {
 
 .form-label {
   display: block;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-secondary);
-  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-control {
   width: 100%;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: white;
-  font-size: 1rem;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 0.925rem;
   font-family: var(--font-main);
-  transition: all 0.3s ease;
+  transition: all 0.15s ease-in-out;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 15px rgba(230, 57, 70, 0.2);
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
 }
 
 .form-control::placeholder {
   color: var(--text-muted);
 }
 
-/* Dropdown styling option fix */
 select.form-control option {
-  background: #0f0f15;
-  color: white;
+  background: #ffffff;
+  color: var(--text-color);
 }
 
-/* Button styles */
+/* Premium Button styles */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 28px;
-  font-size: 1rem;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.15s ease-in-out;
   font-family: var(--font-main);
   text-decoration: none;
+  border: 1px solid transparent;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--primary);
   color: white;
-  border: none;
-  box-shadow: 0 4px 20px var(--primary-glow);
+  border-color: var(--primary);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(230, 57, 70, 0.7);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(1px);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: var(--text-color);
 }
 
 .btn-danger {
-  background: rgba(230, 57, 70, 0.15);
-  color: #ff6b6b;
-  border: 1px solid rgba(230, 57, 70, 0.4);
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
 }
 
 .btn-danger:hover {
-  background: rgba(230, 57, 70, 0.3);
-  box-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
-  transform: translateY(-2px);
+  background: #fecaca;
+  color: #b91c1c;
 }
 
-/* Badges */
+/* Modern pill badges */
 .badge {
-  display: inline-block;
-  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
   font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 4px;
+  font-weight: 600;
+  border-radius: 9999px;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid transparent;
 }
 
 .badge-red {
-  background: rgba(230, 57, 70, 0.2);
-  color: #ff6b6b;
-  border: 1px solid rgba(230, 57, 70, 0.4);
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fca5a5;
 }
 
 .badge-yellow {
-  background: rgba(255, 159, 67, 0.2);
-  color: #ff9f43;
-  border: 1px solid rgba(255, 159, 67, 0.4);
+  background: #fef9c3;
+  color: #854d0e;
+  border-color: #fde047;
 }
 
 .badge-green {
-  background: rgba(40, 199, 111, 0.2);
-  color: #28c76f;
-  border: 1px solid rgba(40, 199, 111, 0.4);
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
 }
 
-/* Animations */
-@keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 0 10px var(--primary-glow); }
-  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(230, 57, 70, 0.6); }
-  100% { transform: scale(1); box-shadow: 0 0 10px var(--primary-glow); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(5deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.float-animation {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Utility layout cards */
+/* Utility grid layouts */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -239,20 +219,20 @@ select.form-control option {
 
 .alert {
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
   border: 1px solid;
 }
 
 .alert-danger {
-  background: rgba(230, 57, 70, 0.1);
-  color: #ff6b6b;
-  border-color: rgba(230, 57, 70, 0.3);
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fca5a5;
 }
 
 .alert-success {
-  background: rgba(40, 199, 111, 0.1);
-  color: #28c76f;
-  border-color: rgba(40, 199, 111, 0.3);
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
 }

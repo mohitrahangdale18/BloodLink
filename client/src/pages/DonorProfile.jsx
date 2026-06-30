@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import api from '../api/axios';
 import Loader from '../components/Loader';
+import { Droplet, Check, X } from '../components/Icons';
 
 const DonorProfile = () => {
   const { user } = useContext(AuthContext);
@@ -117,20 +118,39 @@ const DonorProfile = () => {
       <div className="glass" style={{
         width: '100%',
         maxWidth: '560px',
-        border: '1px solid rgba(230, 57, 70, 0.25)',
-        boxShadow: '0 0 30px rgba(230, 57, 70, 0.15)'
+        borderColor: 'var(--border-color)',
+        background: '#ffffff'
       }}>
-        <h2 className="neon-text" style={{
-          fontSize: '2rem',
+        {/* Header Icon */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: '1rem'
+        }}>
+          <div style={{
+            display: 'inline-flex',
+            padding: '10px',
+            background: 'var(--primary-light, #fef2f2)',
+            border: '1px solid var(--primary-light-border, #fca5a5)',
+            borderRadius: '50%',
+            color: 'var(--primary)'
+          }}>
+            <Droplet size={24} />
+          </div>
+        </div>
+
+        <h2 style={{
+          fontSize: '1.5rem',
           fontWeight: '700',
-          fontFamily: 'Poppins, sans-serif',
-          marginBottom: '0.5rem',
+          fontFamily: 'var(--font-heading)',
+          color: 'var(--text-color)',
+          marginBottom: '0.25rem',
           textAlign: 'center'
         }}>
           {hasProfile ? 'Update Donor Profile' : 'Setup Donor Profile'}
         </h2>
         <p style={{
-          color: 'rgba(255, 255, 255, 0.6)',
+          color: 'var(--text-secondary)',
           fontSize: '0.9rem',
           marginBottom: '2rem',
           textAlign: 'center'
@@ -150,16 +170,17 @@ const DonorProfile = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '1rem 1.5rem',
+            padding: '1rem 1.25rem',
             marginBottom: '2rem',
-            background: 'rgba(255, 255, 255, 0.02)',
-            borderColor: formData.isAvailable ? 'rgba(40, 199, 111, 0.3)' : 'rgba(230, 57, 70, 0.3)'
+            background: 'var(--bg-color)',
+            borderColor: formData.isAvailable ? '#bbf7d0' : 'var(--border-color)',
+            boxShadow: 'none'
           }}>
-            <div>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: '600', color: '#fff', marginBottom: '0.2rem' }}>
+            <div style={{ textAlign: 'left' }}>
+              <h4 style={{ fontSize: '0.95rem', fontWeight: '750', color: 'var(--text-color)', marginBottom: '0.2rem' }}>
                 Availability Status
               </h4>
-              <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
                 {formData.isAvailable ? 'Other members can find you in search' : 'You are temporarily hidden from search'}
               </p>
             </div>
@@ -169,26 +190,27 @@ const DonorProfile = () => {
               type="button"
               onClick={handleToggleAvailable}
               style={{
-                width: '60px',
-                height: '32px',
-                borderRadius: '16px',
-                background: formData.isAvailable ? '#28c76f' : 'rgba(255, 255, 255, 0.1)',
+                width: '52px',
+                height: '28px',
+                borderRadius: '14px',
+                background: formData.isAvailable ? '#16a34a' : '#cbd5e1',
                 border: 'none',
                 cursor: 'pointer',
                 position: 'relative',
-                transition: 'all 0.3s ease',
-                boxShadow: formData.isAvailable ? '0 0 15px rgba(40, 199, 111, 0.5)' : 'none'
+                transition: 'all 0.2s ease',
+                padding: 0
               }}
             >
               <div style={{
-                width: '24px',
-                height: '24px',
+                width: '20px',
+                height: '20px',
                 borderRadius: '50%',
                 background: '#fff',
                 position: 'absolute',
                 top: '4px',
-                left: formData.isAvailable ? '32px' : '4px',
-                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                left: formData.isAvailable ? '28px' : '4px',
+                transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
               }} />
             </button>
           </div>
@@ -267,7 +289,7 @@ const DonorProfile = () => {
             <button
               type="submit"
               className="btn btn-primary"
-              style={{ flex: 2 }}
+              style={{ flex: 1.5 }}
             >
               Save Profile
             </button>

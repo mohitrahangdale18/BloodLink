@@ -1,135 +1,179 @@
 import React, { useContext } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+  import { Link, NavLink, useNavigate } from 'react-router-dom';
+  import { AuthContext } from '../context/AuthContext';
+  import { Droplet, Search, FileText, Activity, User, LogOut, LogIn, UserPlus } from './Icons';
 
-const Navbar = () => {
-  const { isAuthenticated, logout, user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const Navbar = () => {
+    const { isAuthenticated, logout, user } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+    const handleLogout = () => {
+      logout();
+      navigate('/');
+    };
 
-  const navLinkStyle = ({ isActive }) => ({
-    color: isActive ? '#e63946' : '#ffffff',
-    textShadow: isActive ? '0 0 10px rgba(230, 57, 70, 0.5)' : 'none',
-    fontWeight: isActive ? '600' : '400',
-    textDecoration: 'none',
-    margin: '0 1rem',
-    fontSize: '0.95rem',
-    transition: 'all 0.3s ease'
-  });
+    const navLinkClass = ({ isActive }) => 
+      `nav-link ${isActive ? 'active' : ''}`;
 
-  return (
-    <nav className="glass" style={{
-      position: 'sticky',
-      top: 0,
-      zIndex: 1000,
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '1.2rem 2rem',
-      borderRadius: '0 0 16px 16px',
-      borderTop: 'none',
-      borderLeft: 'none',
-      borderRight: 'none',
-      background: 'rgba(10, 10, 15, 0.8)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.5)',
-      margin: '0'
-    }}>
-      {/* Brand Logo */}
-      <Link to="/" style={{
-        display: 'flex',
-        alignItems: 'center',
-        textDecoration: 'none',
-        fontSize: '1.5rem',
-        fontWeight: '800',
-        fontFamily: 'Poppins, sans-serif',
-        color: '#ffffff',
-        letterSpacing: '1px'
+    return (
+      <header style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        background: '#ffffff',
+        borderBottom: '1px solid var(--border-color)',
+        padding: '0.75rem 2rem'
       }}>
-        <span style={{ marginRight: '8px' }}>🩸</span>
-        <span style={{
-          color: '#e63946',
-          textShadow: '0 0 15px rgba(230, 57, 70, 0.6)'
-        }}>Blood</span>
-        <span>Link</span>
-      </Link>
-
-      {/* Nav Menu */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <NavLink to="/" style={navLinkStyle}>Home</NavLink>
-        
-        {isAuthenticated ? (
-          <>
-            <NavLink to="/search" style={navLinkStyle}>Search</NavLink>
-            <NavLink to="/requests" style={navLinkStyle}>Requests</NavLink>
-            <NavLink to="/dashboard" style={navLinkStyle}>Dashboard</NavLink>
-            
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginLeft: '1.5rem',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-              paddingLeft: '1.5rem'
-            }}>
-              <span style={{
-                color: 'rgba(255, 255, 255, 0.7)',
-                fontSize: '0.9rem',
-                marginRight: '1.2rem',
-                fontWeight: '500'
-              }}>
-                {user?.name}
-              </span>
-              <button 
-                onClick={handleLogout}
-                className="btn btn-danger"
-                style={{
-                  padding: '6px 14px',
-                  fontSize: '0.85rem',
-                  borderRadius: '6px'
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          </>
-        ) : (
-          <div style={{
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          {/* Brand Logo */}
+          <Link to="/" style={{
             display: 'flex',
             alignItems: 'center',
-            marginLeft: '1.5rem',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-            paddingLeft: '1.5rem'
+            gap: '8px',
+            textDecoration: 'none',
+            fontSize: '1.25rem',
+            fontWeight: '700',
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--text-color)',
+            letterSpacing: '-0.5px'
           }}>
-            <Link to="/login" style={{
-              color: '#ffffff',
-              textDecoration: 'none',
-              marginRight: '1.5rem',
-              fontSize: '0.95rem',
-              fontWeight: '500',
-              transition: 'color 0.2s ease'
-            }}
-            onMouseOver={(e) => e.target.style.color = '#e63946'}
-            onMouseOut={(e) => e.target.style.color = '#ffffff'}
-            >
-              Login
-            </Link>
-            <Link to="/register" className="btn btn-primary" style={{
-              padding: '8px 18px',
-              fontSize: '0.85rem',
-              borderRadius: '6px'
-            }}>
-              Register
-            </Link>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-};
+            <Droplet size={24} color="var(--primary)" />
+            <span>
+              <span style={{ color: 'var(--primary)' }}>Blood</span>Link
+            </span>
+          </Link>
 
-export default Navbar;
+          {/* Nav Menu */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <NavLink to="/" className={navLinkClass}>
+              Home
+            </NavLink>
+            
+            {isAuthenticated ? (
+              <>
+                <NavLink to="/search" className={navLinkClass}>
+                  <Search size={16} style={{ marginRight: '6px' }} />
+                  Search Donors
+                </NavLink>
+                <NavLink to="/requests" className={navLinkClass}>
+                  <FileText size={16} style={{ marginRight: '6px' }} />
+                  Requests
+                </NavLink>
+                <NavLink to="/dashboard" className={navLinkClass}>
+                  <Activity size={16} style={{ marginRight: '6px' }} />
+                  Dashboard
+                </NavLink>
+                
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: '0.5rem',
+                  borderLeft: '1px solid var(--border-color)',
+                  paddingLeft: '1rem',
+                  gap: '1rem'
+                }}>
+                  <Link to="/profile" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    transition: 'color 0.2s'
+                  }}
+                  className="profile-link"
+                  >
+                    <User size={16} />
+                    <span>{user?.name}</span>
+                  </Link>
+                  <button 
+                    onClick={handleLogout}
+                    className="btn btn-danger"
+                    style={{
+                      padding: '6px 12px',
+                      fontSize: '0.8rem',
+                      borderRadius: '4px'
+                    }}
+                  >
+                    <LogOut size={14} style={{ marginRight: '4px' }} />
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '0.5rem',
+                borderLeft: '1px solid var(--border-color)',
+                paddingLeft: '1rem',
+                gap: '0.75rem'
+              }}>
+                <Link to="/login" style={{
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  transition: 'color 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '8px 12px'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.color = 'var(--primary)'}
+                onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  <LogIn size={15} />
+                  Login
+                </Link>
+                <Link to="/register" className="btn btn-primary" style={{
+                  padding: '8px 16px',
+                  fontSize: '0.85rem',
+                  borderRadius: '4px'
+                }}>
+                  <UserPlus size={15} style={{ marginRight: '4px' }} />
+                  Register
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Global style updates for NavLink */}
+        <style>{`
+          .nav-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            transition: all 0.15s ease;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+          }
+          .nav-link:hover {
+            color: var(--primary);
+            background-color: #f8fafc;
+          }
+          .nav-link.active {
+            color: var(--primary);
+            background-color: #fef2f2;
+            font-weight: 600;
+          }
+          .profile-link:hover {
+            color: var(--primary) !important;
+          }
+        `}</style>
+      </header>
+    );
+  };
+
+  export default Navbar;

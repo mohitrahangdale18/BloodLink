@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Loader from '../components/Loader';
+import { Search, MapPin, Phone, Droplet } from '../components/Icons';
 
 const SearchDonors = () => {
   const [bloodGroup, setBloodGroup] = useState('');
@@ -33,7 +34,6 @@ const SearchDonors = () => {
   };
 
   useEffect(() => {
-    // Initial request loading all available donors
     handleSearch();
   }, []);
 
@@ -41,18 +41,19 @@ const SearchDonors = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <h2 className="neon-text" style={{
-        fontSize: '2.5rem',
-        fontWeight: '800',
-        fontFamily: 'Poppins, sans-serif',
+      <h2 style={{
+        fontSize: '1.75rem',
+        fontWeight: '700',
+        fontFamily: 'var(--font-heading)',
+        color: 'var(--text-color)',
         marginBottom: '0.5rem',
         textAlign: 'left'
       }}>
         Find Compatible Donors
       </h2>
       <p style={{
-        color: 'rgba(255, 255, 255, 0.6)',
-        fontSize: '1rem',
+        color: 'var(--text-secondary)',
+        fontSize: '0.95rem',
         marginBottom: '2rem',
         textAlign: 'left'
       }}>
@@ -61,13 +62,13 @@ const SearchDonors = () => {
 
       {/* Filter Form Card */}
       <form onSubmit={handleSearch} className="glass" style={{
-        padding: '1.5rem',
+        padding: '1.25rem 1.5rem',
         marginBottom: '2.5rem',
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '1.5rem',
+        gap: '1.25rem',
         alignItems: 'flex-end',
-        border: '1px solid rgba(230, 57, 70, 0.2)'
+        background: '#ffffff'
       }}>
         <div className="form-group" style={{ flex: 1, minWidth: '200px', marginBottom: 0, textAlign: 'left' }}>
           <label className="form-label">Blood Group Needed</label>
@@ -96,7 +97,8 @@ const SearchDonors = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary" style={{ padding: '12px 30px' }}>
+        <button type="submit" className="btn btn-primary" style={{ padding: '10px 24px', height: '42px' }}>
+          <Search size={16} style={{ marginRight: '6px' }} />
           Search Donors
         </button>
       </form>
@@ -115,13 +117,16 @@ const SearchDonors = () => {
             <div className="glass" style={{
               padding: '3rem 2rem',
               textAlign: 'center',
-              borderStyle: 'dashed'
+              borderStyle: 'dashed',
+              background: '#ffffff'
             }}>
-              <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>🩸</span>
-              <h3 style={{ fontSize: '1.25rem', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '0.5rem' }}>
+              <div style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                <Droplet size={48} />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', color: 'var(--text-color)', marginBottom: '0.5rem', fontWeight: '700' }}>
                 No Donors Found
               </h3>
-              <p style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '0.9rem' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
                 Try matching other groups or checking spelling. Be the first to register a donor profile in this region!
               </p>
             </div>
@@ -130,10 +135,11 @@ const SearchDonors = () => {
               {donors.map((donor) => (
                 <div key={donor._id} className="glass glass-hover" style={{
                   textAlign: 'left',
-                  border: '1px solid rgba(230, 57, 70, 0.2)',
+                  background: '#ffffff',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  minHeight: '220px'
                 }}>
                   <div>
                     {/* Header */}
@@ -141,32 +147,33 @@ const SearchDonors = () => {
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      marginBottom: '1rem'
+                      marginBottom: '1.25rem'
                     }}>
-                      <h4 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff' }}>
+                      <h4 style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-color)' }}>
                         {donor.userId?.name || 'Anonymous Donor'}
                       </h4>
                       {/* Blood Badge */}
-                      <span className="badge badge-red" style={{ fontSize: '0.85rem', padding: '6px 12px' }}>
+                      <span className="badge badge-red" style={{ fontSize: '0.8rem', padding: '4px 10px' }}>
                         {donor.bloodGroup}
                       </span>
                     </div>
 
                     {/* Details */}
-                    <div style={{ marginBottom: '1.5rem', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
-                      <p style={{ marginBottom: '0.4rem' }}>
-                        📍 City: <strong style={{ color: '#fff' }}>{donor.city}</strong>
+                    <div style={{ marginBottom: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <MapPin size={16} color="var(--text-muted)" />
+                        <span>City: <strong>{donor.city}</strong></span>
                       </p>
-                      <p style={{ marginBottom: '0.4rem' }}>
-                        Status: <span className="badge badge-green">Available</span>
+                      <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span className="badge badge-green" style={{ fontSize: '0.7rem' }}>Available</span>
                       </p>
                       {donor.totalDonations > 0 && (
-                        <p style={{ marginBottom: '0.4rem' }}>
+                        <p style={{ margin: 0 }}>
                           Donation Count: <strong>{donor.totalDonations}</strong>
                         </p>
                       )}
                       {donor.lastDonated && (
-                        <p>
+                        <p style={{ margin: 0 }}>
                           Last Donated: <strong>{new Date(donor.lastDonated).toLocaleDateString()}</strong>
                         </p>
                       )}
@@ -175,13 +182,14 @@ const SearchDonors = () => {
 
                   {/* Contact Button */}
                   <div style={{
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderTop: '1px solid var(--border-color)',
                     paddingTop: '1rem',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    gap: '1rem'
                   }}>
-                    <span style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.4)' }}>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                       Contact Registry
                     </span>
                     <a
@@ -189,11 +197,12 @@ const SearchDonors = () => {
                       className="btn btn-primary"
                       style={{
                         padding: '6px 14px',
-                        fontSize: '0.85rem',
-                        textDecoration: 'none'
+                        fontSize: '0.8rem',
+                        borderRadius: '4px'
                       }}
                     >
-                      📞 Call {donor.userId?.phone}
+                      <Phone size={14} style={{ marginRight: '6px' }} />
+                      Call Donor
                     </a>
                   </div>
                 </div>
